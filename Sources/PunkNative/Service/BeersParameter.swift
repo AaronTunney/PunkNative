@@ -1,13 +1,15 @@
 //
-//  File.swift
-//  
+//  BeersParameter.swift
+//  PunkNative
 //
-//  Created by Aaron on 11/06/2021.
+//  Created by Aaron Tunney on 11/06/2021.
 //
 
 import Foundation
 
-public enum BeerParameter {
+/// All of the possible parameters for the beers service
+public enum BeersParameter {
+    
     /// Returns the numbered page of results
     case page(value: Int)
     
@@ -57,7 +59,7 @@ public enum BeerParameter {
     case ids(values: [String])
 }
 
-extension BeerParameter {
+extension BeersParameter {
     var queryItem: URLQueryItem {
         return URLQueryItem(name: name, value: value)
     }

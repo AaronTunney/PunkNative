@@ -28,22 +28,23 @@ class BeersRepository: BeersServiceProtocol {
     private let baseURL = "https://api.punkapi.com/v2/beers"
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    func beers(parameters: [BeerParameter]) async throws -> [Beer] {
+    func beers(parameters: [BeersParameter]) async throws -> [Beer] {
         let url = try buildURL(parameters: parameters)
         let (data, _) = try await session.data(from: url)
         return try decoder.decode([Beer].self, from: data)
     }
 
-    func beers(parameters: [BeerParameter]) -> AnyPublisher<[Beer], Error> {
+    func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
         return PassthroughSubject<[Beer], Error>()
             .eraseToAnyPublisher()
     }
     
-    private func buildURL(parameters: [BeerParameter]) throws -> URL {
+    private func buildURL(parameters: [BeersParameter]) throws -> URL {
         guard let url = URL(string: baseURL) else {
             throw PunkNativeError.unableToBuildURL
         }
         
+        // If there's no parameters, return the base URL straight away
         if parameters.isEmpty {
             return url
         }

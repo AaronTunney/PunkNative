@@ -22,15 +22,15 @@ public struct PunkNative {
     ///
     /// - Returns: An array of ``Beer`` structs
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public func beers() async throws -> [Beer] {
-        return try await service.beers(parameters: [])
+    public func beers(parameters: [BeersParameter]) async throws -> [Beer] {
+        return try await service.beers(parameters: parameters)
     }
     
     /// Combine version of the Beers API
     ///
     /// - Returns: A generic publisher that will return either an array of ``Beer`` structs
     ///            or an error.
-    public func beers() -> AnyPublisher<[Beer], Error> {
-        return service.beers(parameters: [])
+    public func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
+        return service.beers(parameters: parameters)
     }
 }
