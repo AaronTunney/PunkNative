@@ -1,0 +1,71 @@
+[
+   {
+      "id":1,
+      "name":"Test Beer",
+      "tagline":"This is the test beer",
+      "first_brewed":"01/1970",
+      "description":"A beer for testing",
+      "abv":5.0,
+      "ibu":1,
+      "target_fg":80,
+      "target_og":100,
+      "ebc":12,
+      "srm":12,
+      "ph":7.0,
+      "attenuation_level":1,
+      "volume":{
+         "value":100,
+         "unit":"ml"
+      },
+      "boil_volume":{
+         "value":100,
+         "unit":"ml"
+      },
+      "method":{
+         "mash_temp":[
+            {
+               "temp":{
+                  "value":100,
+                  "unit":"ml"
+               },
+               "duration":60
+            }
+         ],
+         "fermentation":{
+            "temp":{
+               "value":100,
+               "unit":"ml"
+            }
+         },
+         "twist":"The twist"
+      },
+      "ingredients":{
+         "malt":[
+            {
+               "name":"Test Malt",
+               "amount":{
+                  "value":100,
+                  "unit":"ml"
+               }
+            }
+         ],
+         "hops":[
+            {
+               "name":"Test Hops",
+               "amount":{
+                  "value":100,
+                  "unit":"ml"
+               },
+               "add":"Start",
+               "attribute":"Bitter"
+            }
+         ],
+         "yeast":"Test Yeast"
+      },
+      "food_pairing":[
+         "Fish"
+      ],
+      "brewers_tips":"Don't make this beer",
+      "contributed_by":"Bob"
+   }
+]

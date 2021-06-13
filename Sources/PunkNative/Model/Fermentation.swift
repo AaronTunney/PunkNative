@@ -11,7 +11,7 @@ import Foundation
 public struct Fermentation: Decodable {
     
     /// The temperature for fermentation
-    public let temp: Measurement?
+    public let temp: BeerMeasurement?
 }
 
 let testFermentation = Fermentation(temp: testMeasurement)

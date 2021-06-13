@@ -16,7 +16,7 @@ public struct Hop: Decodable {
     public let add: String?
     
     /// The amount to add
-    public let amount: Measurement?
+    public let amount: BeerMeasurement?
     
     /// The reason for adding the hops
     public let attribute: String?

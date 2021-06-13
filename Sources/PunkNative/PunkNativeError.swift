@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  
+//  PunkNativeError.swift
+//  PunkNative
 //
-//  Created by Aaron on 11/06/2021.
+//  Created by Aaron Tunney on 11/06/2021.
 //
 
 import Foundation

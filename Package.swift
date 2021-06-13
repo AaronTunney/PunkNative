@@ -27,6 +27,11 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "PunkNativeTests",
-            dependencies: ["PunkNative", "OHHTTPStubsSwift"]),
+            dependencies: ["PunkNative",
+                            .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
+            ],
+            resources: [
+                .process("Mock/Data"),
+            ])
     ]
 )

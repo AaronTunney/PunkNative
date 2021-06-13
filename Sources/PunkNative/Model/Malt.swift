@@ -14,7 +14,7 @@ public struct Malt: Decodable {
     public let name: String
     
     /// The amount of malt to add
-    public let amount: Measurement?
+    public let amount: BeerMeasurement?
 }
 
 let testMalt = Malt(name: "Test Malt", amount: testMeasurement)

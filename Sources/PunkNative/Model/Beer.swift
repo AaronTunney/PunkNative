@@ -29,10 +29,10 @@ public struct Beer: Decodable {
     public let ingredients: Ingredient?
     
     /// Recipe method
-    public let method: Method?
+    public let method: BeerMethod?
     
     /// Volume of beer created
-    public let volume: Measurement?
+    public let volume: BeerMeasurement?
     
     /// Date first brewed
     public let firstBrewed: Date?
@@ -65,7 +65,7 @@ public struct Beer: Decodable {
     public let attenuationLevel: Int?
     
     /// The amount of water
-    public let boilVolume: Measurement?
+    public let boilVolume: BeerMeasurement?
     
     /// Brewer's tips
     public let brewersTips: String?
@@ -127,11 +127,11 @@ public struct Beer: Decodable {
             imageUrl = nil
         }
         
-        boilVolume = try values.decodeIfPresent(Measurement.self, forKey: .boilVolume)
-        volume = try values.decodeIfPresent(Measurement.self, forKey: .volume)
+        boilVolume = try values.decodeIfPresent(BeerMeasurement.self, forKey: .boilVolume)
+        volume = try values.decodeIfPresent(BeerMeasurement.self, forKey: .volume)
         
         ingredients = try Ingredient(from: decoder)
-        method = try Method(from: decoder)
+        method = try BeerMethod(from: decoder)
     }
 
     /// Initialize `Beer` from parameters
@@ -163,8 +163,8 @@ public struct Beer: Decodable {
          descriptionField: String?,
          imageUrl: URL?,
          ingredients: Ingredient?,
-         method: Method?,
-         volume: Measurement?,
+         method: BeerMethod?,
+         volume: BeerMeasurement?,
          firstBrewed: Date?,
          foodPairing: [String]?,
          abv: Float?,
@@ -175,7 +175,7 @@ public struct Beer: Decodable {
          targetFg: Int?,
          targetOg: Int?,
          attenuationLevel: Int?,
-         boilVolume: Measurement?,
+         boilVolume: BeerMeasurement?,
          brewersTips: String?,
          contributedBy: String?) {
         self.name = name

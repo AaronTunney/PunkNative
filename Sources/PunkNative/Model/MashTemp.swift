@@ -14,7 +14,7 @@ public struct MashTemp: Decodable {
     public let duration: Int?
     
     /// The temperature
-    public let temp: Measurement?
+    public let temp: BeerMeasurement?
 }
 
 let testMashTemp = MashTemp(duration: 60, temp: testMeasurement)
