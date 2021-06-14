@@ -17,7 +17,7 @@ extension Beer: Equatable {
                lhs.attenuationLevel == rhs.attenuationLevel &&
                lhs.brewersTips == rhs.brewersTips &&
                lhs.contributedBy == rhs.contributedBy &&
-               lhs.descriptionField == rhs.descriptionField &&
+               lhs.description == rhs.description &&
                lhs.ebc == rhs.ebc &&
                lhs.firstBrewed == rhs.firstBrewed &&
                lhs.foodPairing == rhs.foodPairing &&

@@ -20,7 +20,7 @@ public struct Beer: Decodable {
     public let tagline: String?
     
     /// Beer description
-    public let descriptionField: String?
+    public let description: String?
     
     /// Beer image URL
     public let imageUrl: URL?
@@ -47,10 +47,10 @@ public struct Beer: Decodable {
     public let ebc: Int?
     
     /// Beer color (American units)
-    public let srm: Int?
+    public let srm: Float?
     
     /// International Bitterness Units scale
-    public let ibu: Int?
+    public let ibu: Float?
     
     /// Acidity of the beer
     public let ph: Float?
@@ -72,74 +72,13 @@ public struct Beer: Decodable {
     
     /// Who contributed the recipe
     public let contributedBy: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case abv = "abv"
-        case attenuationLevel = "attenuation_level"
-        case boilVolume = "boil_volume"
-        case brewersTips = "brewers_tips"
-        case contributedBy = "contributed_by"
-        case descriptionField = "description"
-        case ebc = "ebc"
-        case firstBrewed = "first_brewed"
-        case foodPairing = "food_pairing"
-        case ibu = "ibu"
-        case id = "id"
-        case imageUrl = "image_url"
-        case ingredients = "ingredients"
-        case method = "method"
-        case name = "name"
-        case ph = "ph"
-        case srm = "srm"
-        case tagline = "tagline"
-        case targetFg = "target_fg"
-        case targetOg = "target_og"
-        case volume = "volume"
-    }
-       
-    /// Initializer used for decoding
-    ///
-    /// - Parameter decoder: The decoder to use
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try values.decode(String.self, forKey: .name)
-        id = try values.decode(Int.self, forKey: .id)
-        
-        abv = try values.decodeIfPresent(Float.self, forKey: .abv)
-        attenuationLevel = try values.decodeIfPresent(Int.self, forKey: .attenuationLevel)
-        brewersTips = try values.decodeIfPresent(String.self, forKey: .brewersTips)
-        contributedBy = try values.decodeIfPresent(String.self, forKey: .contributedBy)
-        descriptionField = try values.decodeIfPresent(String.self, forKey: .descriptionField)
-        ebc = try values.decodeIfPresent(Int.self, forKey: .ebc)
-        firstBrewed = try values.decodeIfPresent(Date.self, forKey: .firstBrewed)
-        foodPairing = try values.decodeIfPresent([String].self, forKey: .foodPairing)
-        ibu = try values.decodeIfPresent(Int.self, forKey: .ibu)
-        ph = try values.decodeIfPresent(Float.self, forKey: .ph)
-        srm = try values.decodeIfPresent(Int.self, forKey: .srm)
-        tagline = try values.decodeIfPresent(String.self, forKey: .tagline)
-        targetFg = try values.decodeIfPresent(Int.self, forKey: .targetFg)
-        targetOg = try values.decodeIfPresent(Int.self, forKey: .targetOg)
-        
-        if let imageStr = try values.decodeIfPresent(String.self, forKey: .imageUrl) {
-            imageUrl = URL(string: imageStr)
-        } else {
-            imageUrl = nil
-        }
-        
-        boilVolume = try values.decodeIfPresent(BeerMeasurement.self, forKey: .boilVolume)
-        volume = try values.decodeIfPresent(BeerMeasurement.self, forKey: .volume)
-        
-        ingredients = try Ingredient(from: decoder)
-        method = try BeerMethod(from: decoder)
-    }
 
     /// Initialize `Beer` from parameters
     /// - Parameters:
     ///   - name: Beer name
     ///   - id: Unique beer identifier
     ///   - tagline: Beer tagline
-    ///   - descriptionField: Beer description
+    ///   - description: Beer description
     ///   - imageUrl: Beer image URL
     ///   - ingredients: Recipe ingredients
     ///   - method: Recipe method
@@ -160,7 +99,7 @@ public struct Beer: Decodable {
     init(name: String,
          id: Int,
          tagline: String?,
-         descriptionField: String?,
+         description: String?,
          imageUrl: URL?,
          ingredients: Ingredient?,
          method: BeerMethod?,
@@ -169,8 +108,8 @@ public struct Beer: Decodable {
          foodPairing: [String]?,
          abv: Float?,
          ebc: Int?,
-         srm: Int?,
-         ibu: Int?,
+         srm: Float?,
+         ibu: Float?,
          ph: Float?,
          targetFg: Int?,
          targetOg: Int?,
@@ -181,7 +120,7 @@ public struct Beer: Decodable {
         self.name = name
         self.id = id
         self.tagline = tagline
-        self.descriptionField = descriptionField
+        self.description = description
         self.imageUrl = imageUrl
         self.ingredients = ingredients
         self.method = method
@@ -205,7 +144,7 @@ public struct Beer: Decodable {
 let testBeer = Beer(name: "Test Beer",
                     id: 1,
                     tagline: "This is the test beer",
-                    descriptionField: "A beer for testing",
+                    description: "A beer for testing",
                     imageUrl: nil,
                     ingredients: testIngredient,
                     method: testMethod,

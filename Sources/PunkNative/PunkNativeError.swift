@@ -9,4 +9,5 @@ import Foundation
 
 public enum PunkNativeError: Error {
     case unableToBuildURL
+    case badResponse(error: Error?)
 }

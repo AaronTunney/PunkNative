@@ -17,12 +17,15 @@ class BeersRepository: BeersServiceProtocol {
     
     private let decoder: JSONDecoder = {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "MM/yyyy"
         
-        let decode = JSONDecoder()
-        decode.dateDecodingStrategy = .formatted(dateFormatter)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
         
-        return decode
+        return decoder
     }()
     
     private let baseURL = "https://api.punkapi.com/v2/beers"
@@ -30,12 +33,32 @@ class BeersRepository: BeersServiceProtocol {
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func beers(parameters: [BeersParameter]) async throws -> [Beer] {
         let url = try buildURL(parameters: parameters)
-        let (data, _) = try await session.data(from: url)
-        return try decoder.decode([Beer].self, from: data)
+        let (data, response) = try await session.data(from: url)
+        try handleResponse(response: response)
+        do {
+            return try decoder.decode([Beer].self, from: data)
+        } catch {
+            print(error)
+        }
+        
+        return []
     }
 
     func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
-        return PassthroughSubject<[Beer], Error>()
+        guard let url = try? buildURL(parameters: parameters) else {
+            return Fail(error: PunkNativeError.unableToBuildURL)
+                .eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: url)
+            .tryMap { [weak self] data, response in
+                try self?.handleResponse(response: response)
+                return data
+            }
+            .decode(type: [Beer].self, decoder: decoder)
+            .mapError { error in
+                return PunkNativeError.badResponse(error: error)
+            }
             .eraseToAnyPublisher()
     }
     
@@ -60,5 +83,13 @@ class BeersRepository: BeersServiceProtocol {
         }
         
         return finalURL
+    }
+    
+    private func handleResponse(response: URLResponse) throws {
+        guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+            throw PunkNativeError.badResponse(error: nil)
+        }
+        
+        // Else return
     }
 }

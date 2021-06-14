@@ -28,10 +28,12 @@ let package = Package(
         .testTarget(
             name: "PunkNativeTests",
             dependencies: ["PunkNative",
-                            .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
+                           .product(name: "OHHTTPStubs", package: "OHHTTPStubs"),
+                           .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
             ],
             resources: [
-                .process("Mock/Data"),
+                .copy("TestData/success.json"),
+                .copy("TestData/empty.json")
             ])
     ]
 )
