@@ -10,3 +10,12 @@ import Foundation
 enum MockError: Error, Equatable {
     case genericError
 }
+
+extension MockError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .genericError:
+            return "Generic mock error"
+        }
+    }
+}

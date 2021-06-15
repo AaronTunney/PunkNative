@@ -25,9 +25,11 @@ extension XCTestCase {
         }
     }
     
-    func addErrorStub(error: Error) {
+    func addNotFoundErrorStub() {
         stub(condition: isHost("api.punkapi.com")) { request in
-            return HTTPStubsResponse(error: error)
+            return HTTPStubsResponse(data: Data(),
+                                     statusCode: 404,
+                                     headers: nil)
         }
     }
     

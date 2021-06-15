@@ -36,28 +36,28 @@ class BeersRepositoryTests: XCTestCase {
         XCTAssertEqual(beers, [testBeer])
     }
     
-//    func test_get_beers_empty() async throws {
-//        guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) else {
-//            throw XCTSkip("Async/await not available, skipping test")
-//        }
-//        
-//        mockRepository.state = .empty
-//
-//        let beers = try await sut.beers(parameters: [])
-//        XCTAssertTrue(beers.isEmpty)
-//    }
-//    
-//    func test_get_beers_error() async throws {
-//        guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) else {
-//            throw XCTSkip("Async/await not available, skipping test")
-//        }
-//        
-//        mockRepository.state = .error(error: MockError.genericError)
-//        
-//        do {
-//            _ = try await sut.beers(parameters: [])
-//        } catch {
-//            XCTAssertEqual(error as? MockError, .genericError)
-//        }
-//    }
+    func test_get_beers_empty() async throws {
+        guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) else {
+            throw XCTSkip("Async/await not available, skipping test")
+        }
+        
+        addEmptyStub()
+
+        let beers = try await sut.beers(parameters: [])
+        XCTAssertTrue(beers.isEmpty)
+    }
+    
+    func test_get_beers_not_found_error() async throws {
+        guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) else {
+            throw XCTSkip("Async/await not available, skipping test")
+        }
+
+        addNotFoundErrorStub()
+        
+        do {
+            _ = try await sut.beers(parameters: [])
+        } catch {
+            XCTAssertEqual(error as? PunkNativeError, .badResponse(error: nil))
+        }
+    }
 }

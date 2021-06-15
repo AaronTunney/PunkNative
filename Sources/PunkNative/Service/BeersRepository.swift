@@ -35,13 +35,7 @@ class BeersRepository: BeersServiceProtocol {
         let url = try buildURL(parameters: parameters)
         let (data, response) = try await session.data(from: url)
         try handleResponse(response: response)
-        do {
-            return try decoder.decode([Beer].self, from: data)
-        } catch {
-            print(error)
-        }
-        
-        return []
+        return try decoder.decode([Beer].self, from: data)
     }
 
     func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
