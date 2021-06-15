@@ -50,9 +50,6 @@ class BeersRepository: BeersServiceProtocol {
                 return data
             }
             .decode(type: [Beer].self, decoder: decoder)
-            .mapError { error in
-                return PunkNativeError.badResponse(error: error)
-            }
             .eraseToAnyPublisher()
     }
     
