@@ -56,13 +56,13 @@ public struct Beer: Decodable {
     public let ph: Float?
     
     /// How much sugar is left over when fermentation is done
-    public let targetFg: Int?
+    public let targetFg: Float?
     
     /// How much sugar is present in the wort before it is fermented
-    public let targetOg: Int?
+    public let targetOg: Float?
     
     /// The conversion of sugars into alcohol and carbon dioxide by the fermentation process
-    public let attenuationLevel: Int?
+    public let attenuationLevel: Float?
     
     /// The amount of water
     public let boilVolume: BeerMeasurement?
@@ -111,9 +111,9 @@ public struct Beer: Decodable {
          srm: Float?,
          ibu: Float?,
          ph: Float?,
-         targetFg: Int?,
-         targetOg: Int?,
-         attenuationLevel: Int?,
+         targetFg: Float?,
+         targetOg: Float?,
+         attenuationLevel: Float?,
          boilVolume: BeerMeasurement?,
          brewersTips: String?,
          contributedBy: String?) {

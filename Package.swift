@@ -34,6 +34,9 @@ let package = Package(
             resources: [
                 .copy("TestData/success.json"),
                 .copy("TestData/empty.json")
-            ])
+            ]),
+        .testTarget(
+            name: "PunkNativeContractTests",
+            dependencies: ["PunkNative"])
     ]
 )
