@@ -13,7 +13,7 @@ public enum BeersParameter {
     /// Returns the numbered page of results
     case page(value: Int)
     
-    /// Returns a maxium of _n_ of results
+    /// Returns a maxium of _n_ of results (default: 25)
     case perPage(value: Int)
     
     /// Returns all beers with ABV greater than the supplied number
