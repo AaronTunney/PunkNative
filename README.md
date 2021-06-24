@@ -1,6 +1,6 @@
 # PunkNative
 
-A native Swift wrapper for the [Punk API](https://punkapi.com).
+A native Swift Package for the [Punk API](https://punkapi.com) beer recipe database.
 
 ## How to use
 
