@@ -29,6 +29,17 @@ class MockBeerRepository: BeersServiceProtocol {
         }
     }
     
+    func randomBeer() async throws -> Beer {
+        switch state {
+        case .success:
+            return testBeer
+        case .error(let error):
+            throw error
+        case .empty:
+            fatalError("Empty is not a valid state for random")
+        }
+    }
+    
     func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
         switch state {
         case .success:
@@ -42,6 +53,20 @@ class MockBeerRepository: BeersServiceProtocol {
         case .error(let error):
             return Fail(error: error)
                 .eraseToAnyPublisher()
+        }
+    }
+    
+    func randomBeer() -> AnyPublisher<Beer, Error> {
+        switch state {
+        case .success:
+            return Just(testBeer)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        case .error(let error):
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        case .empty:
+            fatalError("Empty is not a valid state for random")
         }
     }
 }

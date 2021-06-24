@@ -10,6 +10,7 @@ import Foundation
 public enum PunkNativeError: Error {
     case unableToBuildURL
     case badResponse(error: Error?)
+    case unableToDecodeResponse
 }
 
 extension PunkNativeError: LocalizedError {
@@ -19,6 +20,8 @@ extension PunkNativeError: LocalizedError {
             return "Unable to build URL"
         case .badResponse(let error):
             return "Bad response: \(error?.localizedDescription ?? "no description")"
+        case .unableToDecodeResponse:
+            return "Unable to decode response"
         }
     }
 }
@@ -30,6 +33,8 @@ extension PunkNativeError: Equatable {
             return true
         case (let .badResponse(lhsError), let .badResponse(rhsError)):
             return lhsError?.localizedDescription == rhsError?.localizedDescription
+        case (.unableToDecodeResponse, .unableToDecodeResponse):
+            return true
         default:
             return false
         }

@@ -18,6 +18,13 @@ extension XCTestCase {
         }
     }
     
+    func addRandomBeerStub() {
+        stub(condition: isHost("api.punkapi.com")) { request in
+            let stubPath = Bundle.module.path(forResource: "random", ofType: "json")!
+            return HTTPStubsResponse(fileAtPath: stubPath, statusCode: 200, headers: nil)
+        }
+    }
+    
     func addEmptyStub() {
         stub(condition: isHost("api.punkapi.com")) { request in
             let stubPath = Bundle.module.path(forResource: "empty", ofType: "json")!

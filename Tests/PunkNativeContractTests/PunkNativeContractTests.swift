@@ -109,6 +109,15 @@ class PunkNativeContractTests: XCTestCase {
             .ids(values: ["1", "2", "3"])
         ])
     }
+    
+    func test_random_beer() async throws {
+        guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) else {
+            throw XCTSkip("Async/await not available, skipping test")
+        }
+        
+        let beer = try await beerRepository.randomBeer()
+        XCTAssertFalse(beer.name.isEmpty)
+    }
                           
     // MARK: - Helper methods
     

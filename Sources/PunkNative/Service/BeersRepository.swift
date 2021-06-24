@@ -38,6 +38,17 @@ class BeersRepository: BeersServiceProtocol {
         return try decoder.decode([Beer].self, from: data)
     }
 
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    func randomBeer() async throws -> Beer {
+        let url = try buildRandomURL()
+        let (data, response) = try await session.data(from: url)
+        try handleResponse(response: response)
+        guard let beer = try decoder.decode([Beer].self, from: data).first else {
+            throw PunkNativeError.unableToDecodeResponse
+        }
+        return beer
+    }
+    
     func beers(parameters: [BeersParameter]) -> AnyPublisher<[Beer], Error> {
         guard let url = try? buildURL(parameters: parameters) else {
             return Fail(error: PunkNativeError.unableToBuildURL)
@@ -50,6 +61,27 @@ class BeersRepository: BeersServiceProtocol {
                 return data
             }
             .decode(type: [Beer].self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
+    
+    func randomBeer() -> AnyPublisher<Beer, Error> {
+        guard let url = try? buildRandomURL() else {
+            return Fail(error: PunkNativeError.unableToBuildURL)
+                .eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: url)
+            .tryMap { [weak self] data, response in
+                try self?.handleResponse(response: response)
+                return data
+            }
+            .decode(type: [Beer].self, decoder: decoder)
+            .tryMap { beers in
+                guard let beer = beers.first else {
+                    throw PunkNativeError.unableToDecodeResponse
+                }
+                return beer
+            }
             .eraseToAnyPublisher()
     }
     
@@ -74,6 +106,14 @@ class BeersRepository: BeersServiceProtocol {
         }
         
         return finalURL
+    }
+    
+    private func buildRandomURL() throws -> URL {
+        guard let url = URL(string: baseURL) else {
+            throw PunkNativeError.unableToBuildURL
+        }
+        
+        return url.appendingPathComponent("random")
     }
     
     private func handleResponse(response: URLResponse) throws {
