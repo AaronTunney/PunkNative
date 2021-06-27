@@ -44,7 +44,7 @@ public struct Beer: Decodable {
     public let abv: Float?
     
     /// Beer color (European units)
-    public let ebc: Int?
+    public let ebc: Float?
     
     /// Beer color (American units)
     public let srm: Float?
@@ -107,7 +107,7 @@ public struct Beer: Decodable {
          firstBrewed: Date?,
          foodPairing: [String]?,
          abv: Float?,
-         ebc: Int?,
+         ebc: Float?,
          srm: Float?,
          ibu: Float?,
          ph: Float?,
